@@ -1,0 +1,24 @@
+---
+const { title, description, href = "" } = Astro.props;
+
+const hasIcon = Astro.slots.has("Icon");
+---
+
+<a
+  href={href}
+  target="_blank"
+  class={"flex gap-3 p-2 rounded bg-white border border-gray-100 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors cursor-pointer w-full flex-1 select-none"}
+>
+  {
+    hasIcon && (
+      <div class="flex justify-center items-center">
+        <slot name="Icon" />
+      </div>
+    )
+  }
+  <div class="w-full select-none">
+    {title && <b>{title}</b>}
+    {description && <p>{description}</p>}
+    <slot name="content" />
+  </div>
+</a>

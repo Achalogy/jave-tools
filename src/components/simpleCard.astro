@@ -1,20 +1,22 @@
 ---
-import { IconListCheck } from "@tabler/icons-react";
+const { title = "", description = "" } = Astro.props;
 
-const { title, description, clickable, href = "" } = Astro.props;
+const hasIcon = Astro.slots.has("Icon");
 ---
 
-<a
-  href={href}
-  target="_blank"
-  class={"flex gap-3 p-2 rounded bg-white border border-gray-100 dark:bg-gray-800 dark:border-gray-700 " +
-    (clickable ? "hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors cursor-pointer" : "")}
+<div
+  class={"flex gap-3 p-2 p-4 rounded bg-white border border-gray-100 dark:bg-gray-800 dark:border-gray-700 w-full flex-1"}
 >
-  <div class="flex justify-center items-center">
-    <slot name="Icon" />
+  {
+    hasIcon && (
+      <div class="flex justify-center items-center">
+        <slot name="Icon" />
+      </div>
+    )
+  }
+  <div class="w-full">
+    {title && <b>{title}</b>}
+    {description && <p>{description}</p>}
+    <slot name="content" />
   </div>
-  <div>
-    <b>{title}</b>
-    <p>{description}</p>
-  </div>
-</a>
+</div>

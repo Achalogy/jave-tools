@@ -1,0 +1,180 @@
+---
+import {
+  IconCirclePlus,
+  IconMoon,
+  IconSun,
+  IconTrash,
+} from "@tabler/icons-react";
+import Base from "../layouts/Base.astro";
+import SimpleCard from "../components/simpleCard.astro";
+
+const themeCookie = Astro.cookies.get("theme")?.value ?? "light";
+
+let clases: {
+  name: string;
+  id: string;
+  url?: string;
+}[] = JSON.parse(Astro.cookies.get("clases")?.value ?? "[]");
+
+if (Astro.request.method == "POST") {
+  const formData = await Astro.request.formData();
+
+  const formName = (formData?.get("form-name") ?? "").toString();
+
+  switch (formName) {
+    case "addClass": {
+      const name = (formData?.get("name") ?? "").toString();
+      const id = (formData?.get("id") ?? "").toString();
+
+      if (!name || !id) return;
+
+      clases.push({
+        name,
+        id,
+      });
+      break;
+    }
+
+    case "removeClass": {
+      const id = (formData?.get("id") ?? "").toString();
+
+      if (!id) return;
+
+      clases = clases.filter((c) => c.id != id);
+
+      break;
+    }
+  }
+
+  Astro.cookies.set("clases", JSON.stringify(clases));
+}
+---
+
+<script is:inline>
+  function changeTheme() {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; theme=`);
+    const theme = parts.pop().split(";").shift();
+    const nTheme = theme == "dark" ? "light" : "dark";
+    document.cookie = `theme=${nTheme}; expires=${new Date(Date.now() + 10e9).toUTCstring()}; path=/`;
+    window.location.reload();
+  }
+
+  function showForm() {
+    const e = document.getElementById("form-addClass");
+    e.style.setProperty("display", "flex");
+  }
+
+  function hideForm() {
+    const e = document.getElementById("form-addClass");
+    e.style.setProperty("display", "none");
+  }
+</script>
+
+<Base>
+  <div
+    class="flex-col xl:flex-row flex gap-2 xl:gap-4 w-full xl:w-2/3 p-4 mx-auto"
+  >
+    <div class="flex flex-col flex-1 gap-2 xl:gap-4">
+      <b>Configuración de la aplicación</b>
+      <div
+        onclick="changeTheme()"
+        class="border dark:border-slate-700 dark:bg-gray-800 rounded p-4 flex gap-2 cursor-pointer select-none"
+      >
+        <p>
+          {themeCookie == "dark" ? <IconSun /> : <IconMoon />}
+        </p>
+        <p class="font-semibold">
+          {
+            themeCookie == "dark"
+              ? "Cambiar a tema Claro"
+              : "Cambiar a tema Oscuro"
+          }
+        </p>
+      </div>
+    </div>
+    <div class="flex flex-col gap-2 xl:gap-4 flex-[2]">
+      <b>Personalizar App</b>
+      <div class="flex flex-col gap-2 xl:gap-4">
+        <SimpleCard>
+          <div
+            slot="content"
+            class="flex flex-col gap-2 xl:gap-4 xl:p-1 w-full"
+          >
+            <b>Lista de materias</b>
+            <p>
+              Agrega una clase para crear un acceso directo a Campus en la
+              <a href="/" class="underline text-sky-400">pantalla inicial</a>
+            </p>
+            <div class="flex flex-col gap-4">
+              {
+                clases.map((c) => (
+                  <form
+                    id="form=removeClass"
+                    method="post"
+                    class="p-2 flex gap-4 items-center justify-between bg-gray-100 dark:bg-gray-900 rounded w-full"
+                  >
+                    <input type="hidden" name="form-name" value="removeClass" />
+                    <b class="xl:text-md truncate flex-[6]">{c.name}</b>
+                    <p class="flex-[2]">{c.id}</p>
+                    <button type="submit" class="cursor-pointer flex-1">
+                      <IconTrash color="red" />
+                    </button>
+                    <input type="hidden" name="id" value={c.id} />
+                  </form>
+                ))
+              }
+              <form
+                method="post"
+                id="form-addClass"
+                name="addClass"
+                class="flex flex-col gap-2 border dark:border-gray-700 rounded p-4"
+                style={"display:none;"}
+              >
+                <input type="hidden" name="form-name" value="addClass" />
+                <label class="flex flex-col gap-1">
+                  Nombre
+                  <input
+                    name="name"
+                    type="text"
+                    class="bg-gray-100 dark:bg-gray-900"
+                  />
+                </label>
+                <label class="flex flex-col gap-1">
+                  Código
+                  <input
+                    name="id"
+                    type="text"
+                    class="bg-gray-100 dark:bg-gray-900"
+                  />
+                </label>
+                <div class="justify-end flex gap-2 mt-3">
+                  <button
+                    type="submit"
+                    class="w-1/4 p-2 bg-blue-400 rounded font-semibold text-white dark:saturate-80 dark:brightness-90"
+                  >
+                    <p>Guardar</p>
+                  </button>
+                  <button
+                    onclick="hideForm()"
+                    type="reset"
+                    class="w-1/4 p-2 bg-red-400 rounded font-semibold text-white dark:saturate-80 dark:brightness-90"
+                  >
+                    <p>Cancelar</p>
+                  </button>
+                </div>
+              </form>
+              <div
+                onclick="showForm()"
+                class="p-2 flex gap-4 items-center justify-between hover:bg-gray-50 transition-colors dark:hover:bg-gray-900 rounded cursor-pointer select-none"
+              >
+                <p class="text-gray-600">Agregar Nueva clase</p>
+                <IconCirclePlus color="rgb(75 85 99 / .5)" />
+              </div>
+            </div>
+          </div>
+        </SimpleCard>
+      </div>
+    </div>
+  </div>
+</Base>

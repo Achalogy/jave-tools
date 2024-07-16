@@ -1,7 +1,10 @@
 ---
 import ViewTransitions from "astro/components/ViewTransitions.astro";
-import { IconStackPush, IconSun, IconUser } from "@tabler/icons-react";
-import { IconMoon } from "@tabler/icons-react";
+import {
+  IconSettings,
+  IconStackPush,
+  IconUser,
+} from "@tabler/icons-react";
 
 const { title, desc } = Astro.props;
 const themeCookie = Astro.cookies.get("theme")?.value ?? "light";
@@ -36,16 +39,6 @@ const themeCookie = Astro.cookies.get("theme")?.value ?? "light";
       <div
         class={`flex flex-col min-h-screen bg-white dark:bg-gray-900 dark:text-white`}
       >
-        <script is:inline>
-          function changeTheme() {
-            const value = `; ${document.cookie}`;
-            const parts = value.split(`; theme=`);
-            const theme = parts.pop().split(";").shift();
-            const nTheme = theme == "dark" ? "light" : "dark";
-            document.cookie = `theme=${nTheme}; expires=${new Date(Date.now() + 10e9).toUTCString()}; path=/`;
-            window.location.reload();
-          }
-        </script>
         <div
           class="select-none p-4 flex justify-between px-[5%] bg-gradient-to-r dark:from-gray-800 dark:to-gray-800 from-purple-500 to-indigo-600 text-white"
         >
@@ -67,9 +60,9 @@ const themeCookie = Astro.cookies.get("theme")?.value ?? "light";
             >
               <IconStackPush />
             </a>
-            <p onclick="changeTheme()" class="cursor-pointer">
-              {themeCookie == "dark" ? <IconSun /> : <IconMoon />}
-            </p>
+            <a title="Configuración" href="/settings" class="cursor-pointer">
+              <IconSettings />
+            </a>
           </div>
         </div>
         <slot />
@@ -86,6 +79,13 @@ const themeCookie = Astro.cookies.get("theme")?.value ?? "light";
           -ms-overflow-style: none; /* IE and Edge */
           scrollbar-width: none; /* Firefox */
           /* font-family: "hack"; */
+          margin: 0px;
+          padding: 0px;
+        }
+        
+        p {
+          margin: 0px !important;
+          padding: 0px !important;
         }
 
         body {
