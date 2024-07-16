@@ -40,7 +40,7 @@ const themeCookie = Astro.cookies.get("theme")?.value ?? "light";
         class={`flex flex-col min-h-screen bg-white dark:bg-gray-900 dark:text-white`}
       >
         <div
-          class="select-none p-4 flex justify-between px-[5%] bg-gradient-to-r dark:from-gray-800 dark:to-gray-800 from-purple-500 to-indigo-600 text-white"
+          class="select-none p-4 flex justify-between items-center px-[5%] bg-gradient-to-r dark:from-gray-800 dark:to-gray-800 from-purple-500 to-indigo-600 text-white"
         >
           <a class="font-semibold" href="/">Jave-Tools</a>
           <div class="flex gap-4">
@@ -50,7 +50,7 @@ const themeCookie = Astro.cookies.get("theme")?.value ?? "light";
               target="_blank"
               class="cursor-pointer"
             >
-              <IconUser />
+              <IconUser size={30} />
             </a>
             <a
               title="Campus virtual"
@@ -58,10 +58,10 @@ const themeCookie = Astro.cookies.get("theme")?.value ?? "light";
               target="_blank"
               class="cursor-pointer"
             >
-              <IconStackPush />
+              <IconStackPush size={30} />
             </a>
             <a title="Configuración" href="/settings" class="cursor-pointer">
-              <IconSettings />
+              <IconSettings size={30} />
             </a>
           </div>
         </div>
