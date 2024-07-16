@@ -1,17 +1,40 @@
 ---
-import { IconCalendar, IconListCheck } from "@tabler/icons-react";
+import { IconAbacus, IconCalendar, IconListCheck } from "@tabler/icons-react";
 import ClickableCard from "../components/clickableCard.astro";
 import Base from "../layouts/Base.astro";
+
+let clases: {
+  name: string;
+  id: string;
+  url?: string;
+}[] = JSON.parse(Astro.cookies.get("clases")?.value ?? "[]");
 ---
 
 <Base>
   <div class="w-full xl:w-2/3 mx-auto p-4">
     <div class="flex flex-col gap-3 p-4">
+      <b>Clases Campus</b>
+      <div class="grid grid-cols-1 xl:grid-cols-3 gap-3">
+        {
+          clases.map((c) => (
+            <ClickableCard
+              title={c.name}
+              description={c.id}
+              href={
+                "https://campusvirtuallms.javeriana.edu.co/d2l/home/" + c.id
+              }
+            >
+              <IconAbacus slot="Icon" />
+            </ClickableCard>
+          ))
+        }
+      </div>
+    </div>
+    <div class="flex flex-col gap-3 p-4">
       <b>Enlaces importantes</b>
       <ClickableCard
         title="Plan de estudios"
         description="Ingeniería de sistemas"
-        clickable={true}
         href="https://drive.google.com/file/d/10GRkHgHyxEKHVsxJtIAUjQ7nD2Srgojd/view?usp=sharing"
       >
         <IconListCheck slot="Icon" color={"#0d9488"} />
@@ -19,7 +42,6 @@ import Base from "../layouts/Base.astro";
       <ClickableCard
         title="Calendario 2024"
         description="Fechas importantes"
-        clickable={true}
         href="https://drive.google.com/file/d/1XJjmkuXhiYynM7n3Rr7eeT_1Z0EOCwRB/view?usp=sharing"
       >
         <IconCalendar slot="Icon" color={"#0d9488"} />
