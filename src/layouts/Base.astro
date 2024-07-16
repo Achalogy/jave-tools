@@ -15,7 +15,7 @@ const themeCookie = Astro.cookies.get("theme")?.value ?? "light";
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{title ?? "Achalogy"}</title>
+    <title>{title ?? "JaveTools"}</title>
     <meta name="description" content={desc ?? ""} />
     <link rel="icon" type="image/svg+xml" href="/favicon.ico?v=16" />
     <meta name="viewport" content="width=device-width" />
@@ -41,9 +41,9 @@ const themeCookie = Astro.cookies.get("theme")?.value ?? "light";
         class={`flex flex-col min-h-screen bg-white dark:bg-gray-900 dark:text-white`}
       >
         <div
-          class="select-none p-4 flex justify-between items-center px-[5%] bg-gradient-to-r dark:from-gray-800 dark:to-gray-800 from-purple-500 to-indigo-600 text-white"
+          class="select-none p-4 flex justify-between items-center px-[5%] bg-indigo-400 dark:from-gray-800 dark:to-gray-800 text-white"
         >
-          <a class="font-semibold" href="/">Jave-Tools</a>
+          <a class="font-semibold" href="/">JaveTools</a>
           <div class="flex gap-4">
             <a
               title="Centro de alumnado"
@@ -67,6 +67,12 @@ const themeCookie = Astro.cookies.get("theme")?.value ?? "light";
           </div>
         </div>
         <slot />
+        <footer class="flex flex-col items-center mt-auto p-8 bg-indigo-400 text-center">
+          <p class="text-xl xl:text-2xl font-semibold text-white">
+            Creado por <a target="_blank" class="underline" href="https://achalogy.dev">Acha</a>
+          </p>
+          <p class="text-white font-semibold text-md xl:text-xl">Cursos o ejercicios de programación en <a target="_blank" class="underline" href="https://progra-acha.site">Progra Acha</a></p>
+        </footer>
       </div>
 
       <style is:global>
