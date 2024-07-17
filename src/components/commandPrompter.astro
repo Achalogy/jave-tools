@@ -74,7 +74,7 @@ const { list = [] } = Astro.props;
           .slice(0, 5)
           .map(
             (x) =>
-              `<button target='_blank' class='w-full flex flex-col justify-left text-left p-2 dark:bg-gray-800 text-white' onclick='window.open("${x.href}")'> 
+              `<button target='_blank' class='w-full flex flex-col justify-left text-left p-2 dark:bg-gray-800 dark:text-white' onclick='window.open("${x.href}")'> 
   <b class='text-md'>${x.title}</b>
   <p>${x.description}</p>
 </button>`
