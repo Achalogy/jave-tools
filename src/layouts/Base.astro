@@ -102,22 +102,27 @@ const themeCookie = Astro.cookies.get("theme")?.value ?? "light";
           padding: 0px;
         }
 
-        /* ::-webkit-scrollbar {
+        ::-webkit-scrollbar {
           width: 10px;
         }
-        
-        ::-webkit-scrollbar-track {
-          background: #f1f1f1;
+
+        :has(.dark)::-webkit-scrollbar-track {
+          background: rgb(17 24 39);
         }
-        
+
+        :has(.dark)::-webkit-scrollbar-thumb {
+          background: rgb(110, 115, 124);
+          border-radius: 2rem;
+        }
+
         ::-webkit-scrollbar-thumb {
           background: #b0b0b0;
           border-radius: 2rem;
         }
-        
+
         ::-webkit-scrollbar-thumb:hover {
           background: #8f8f8f;
-        } */
+        }
 
         p {
           margin: 0px !important;
