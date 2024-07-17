@@ -1,0 +1,55 @@
+---
+import { icons, iconsList } from "@tabler/icons-react";
+
+const iconList = iconsList.default;
+---
+
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css"
+/>
+
+<script is:inline>
+  function test(e) {
+    const i = document.getElementById("select-icon");
+    const oldvalue = i.getAttribute("value");
+
+    const oldIcon = document.querySelector(`button[title=${oldvalue}]`);
+    const newIcon = document.querySelector(`button[title=${e.getAttribute("title")}]`);
+
+    newIcon.style.setProperty("background-color", "#00000010");
+
+    if (oldIcon) {
+      oldIcon.style.setProperty("background-color", "transparent");
+    }
+
+    i.setAttribute("value", e.getAttribute("title"));
+  }
+</script>
+
+<input type="hidden" name="selected-icon" id="select-icon" />
+
+<div
+  class="grid grid-cols-5 aspect-square w-[200px] h-[200px] overflow-y-scroll gap-1"
+>
+  {
+    iconList.map((ico) => {
+      const iconName =
+        "Icon" +
+        ico
+          .split("-")
+          .map((x) => x[0].toUpperCase() + x.slice(1))
+          .join("");
+      return (
+        <button
+          type="button"
+          onclick="test(this)"
+          title={iconName}
+          class="flex items-center justify-center cursor-pointer aspect-square rounded"
+        >
+          <i class={`ti ti-${ico} text-2xl`} />
+        </button>
+      );
+    })
+  }
+</div>

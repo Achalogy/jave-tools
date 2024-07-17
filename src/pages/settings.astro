@@ -3,12 +3,14 @@ import {
   IconCirclePlus,
   IconDownload,
   IconMoon,
+  icons,
   IconSun,
   IconTrash,
   IconUpload,
 } from "@tabler/icons-react";
 import Base from "../layouts/Base.astro";
 import SimpleCard from "../components/simpleCard.astro";
+import IconListSelector from "../components/iconListSelector.astro";
 
 const themeCookie = Astro.cookies.get("theme")?.value ?? "light";
 
@@ -16,6 +18,7 @@ let clases: {
   name: string;
   id: string;
   url?: string;
+  icon?: string;
 }[] = JSON.parse(Astro.cookies.get("clases")?.value ?? "[]");
 
 if (Astro.request.method == "POST") {
@@ -27,12 +30,14 @@ if (Astro.request.method == "POST") {
     case "addClass": {
       const name = (formData?.get("name") ?? "").toString();
       const id = (formData?.get("id") ?? "").toString();
+      const icon = (formData?.get("selected-icon") ?? "").toString();
 
-      if (!name || !id) return;
+      if (!name || !id || !icon) return;
 
       clases.push({
         name,
         id,
+        icon,
       });
       break;
     }
@@ -170,21 +175,26 @@ if (Astro.request.method == "POST") {
           </p>
           <div class="flex flex-col gap-2">
             {
-              clases.map((c) => (
-                <form
-                  id="form-removeClass"
-                  method="post"
-                  class="p-2 flex gap-4 items-center justify-between bg-gray-100 dark:bg-gray-900 rounded w-full"
-                >
-                  <input type="hidden" name="form-name" value="removeClass" />
-                  <b class="xl:text-md truncate flex-[6]">{c.name}</b>
-                  <p class="flex-[2]">{c.id}</p>
-                  <button type="submit" class="cursor-pointer flex-1">
-                    <IconTrash color="red" />
-                  </button>
-                  <input type="hidden" name="id" value={c.id} />
-                </form>
-              ))
+              clases.map((c) => {
+                const Icon = icons[c.icon];
+
+                return (
+                  <form
+                    id="form-removeClass"
+                    method="post"
+                    class="p-2 flex gap-4 items-center justify-between bg-gray-100 dark:bg-gray-900 rounded w-full"
+                  >
+                    {Icon && <Icon />}
+                    <input type="hidden" name="form-name" value="removeClass" />
+                    <b class="xl:text-md truncate flex-[6]">{c.name}</b>
+                    <p class="flex-[2]">{c.id}</p>
+                    <button type="submit" class="cursor-pointer flex-1">
+                      <IconTrash color="red" />
+                    </button>
+                    <input type="hidden" name="id" value={c.id} />
+                  </form>
+                );
+              })
             }
             <form
               method="post"
@@ -210,6 +220,10 @@ if (Astro.request.method == "POST") {
                   class="bg-gray-100 dark:bg-gray-900"
                 />
               </label>
+              <p>Icono</p>
+              <div class="p-2 rounded bg-gray-100 mr-auto">
+                <IconListSelector slot="content" />
+              </div>
               <div class="justify-end flex gap-2 mt-3">
                 <button
                   type="submit"

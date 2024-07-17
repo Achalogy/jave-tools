@@ -1,5 +1,11 @@
 ---
-import { IconAbacus, IconCalendar, IconListCheck, IconReservedLine } from "@tabler/icons-react";
+import {
+  IconAbacus,
+  IconCalendar,
+  IconListCheck,
+  IconReservedLine,
+  icons,
+} from "@tabler/icons-react";
 import ClickableCard from "../components/clickableCard.astro";
 import Base from "../layouts/Base.astro";
 
@@ -7,6 +13,7 @@ let clases: {
   name: string;
   id: string;
   url?: string;
+  icon?: string;
 }[] = JSON.parse(Astro.cookies.get("clases")?.value ?? "[]");
 ---
 
@@ -16,17 +23,21 @@ let clases: {
       <b>Clases Campus</b>
       <div class="grid grid-cols-1 xl:grid-cols-3 gap-3">
         {
-          clases.map((c) => (
-            <ClickableCard
-              title={c.name}
-              description={c.id}
-              href={
-                "https://campusvirtuallms.javeriana.edu.co/d2l/home/" + c.id
-              }
-            >
-              <IconAbacus slot="Icon" />
-            </ClickableCard>
-          ))
+          clases.map((c) => {
+            const Icon = icons[c.icon] ?? IconAbacus;
+
+            return (
+              <ClickableCard
+                title={c.name}
+                description={c.id}
+                href={
+                  "https://campusvirtuallms.javeriana.edu.co/d2l/home/" + c.id
+                }
+              >
+                <Icon slot="Icon" />
+              </ClickableCard>
+            );
+          })
         }
       </div>
     </div>
