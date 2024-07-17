@@ -1,0 +1,20 @@
+---
+import { IconTrash } from "@tabler/icons-react";
+
+const { Icon, c } = Astro.props;
+---
+
+<form
+  id="form-removeClass"
+  method="post"
+  class="p-2 flex gap-4 items-center justify-between bg-gray-100 dark:bg-gray-900 rounded w-full"
+>
+  {Icon && <Icon />}
+  <input type="hidden" name="form-name" value="removeClass" />
+  <b class="xl:text-md truncate flex-[6]">{c.name}</b>
+  <p class="flex-[2]">{c.id}</p>
+  <button type="submit" class="cursor-pointer flex-1">
+    <IconTrash color="red" />
+  </button>
+  <input type="hidden" name="id" value={`${c.id}${c.createdAt ?? 0}`} />
+</form>
