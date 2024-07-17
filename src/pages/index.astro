@@ -1,5 +1,5 @@
 ---
-import { IconAbacus, IconCalendar, IconListCheck } from "@tabler/icons-react";
+import { IconAbacus, IconCalendar, IconListCheck, IconReservedLine } from "@tabler/icons-react";
 import ClickableCard from "../components/clickableCard.astro";
 import Base from "../layouts/Base.astro";
 
@@ -45,6 +45,13 @@ let clases: {
         href="https://drive.google.com/file/d/1XJjmkuXhiYynM7n3Rr7eeT_1Z0EOCwRB/view?usp=sharing"
       >
         <IconCalendar slot="Icon" color={"#0d9488"} />
+      </ClickableCard>
+      <ClickableCard
+        title="Salas Biblioteca"
+        description="Reservas Javeriana"
+        href="https://biblioreservas.javeriana.edu.co/r/search/espacios_biblioteca_puj#s-lc-public-pt"
+      >
+        <IconReservedLine slot="Icon" color={"#0d9488"} />
       </ClickableCard>
     </div>
   </div>
