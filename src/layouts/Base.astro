@@ -1,6 +1,7 @@
 ---
 import ViewTransitions from "astro/components/ViewTransitions.astro";
 import {
+  IconBrandGithub,
   IconMap2,
   IconSettings,
   IconStackPush,
@@ -82,6 +83,11 @@ const themeCookie = Astro.cookies.get("theme")?.value ?? "light";
               target="_blank"
               class="underline"
               href="https://progra-acha.site">Progra Acha</a
+            >
+          </p>
+          <p class="flex gap-2 text-white">
+            Código de esta página disponible en <a class="flex gap-1 underline" href="https://github.com/Achalogy/jave-tools" target="_blank">
+              <IconBrandGithub /> Github</a
             >
           </p>
         </footer>
