@@ -30,7 +30,7 @@ const iconList = iconsList.default;
 <input type="hidden" name="selected-icon" id="select-icon" />
 
 <div
-  class="grid grid-cols-5 aspect-square w-[200px] h-[200px] overflow-y-scroll gap-1"
+  class="grid grid-cols-5 aspect-square w-full h-full overflow-y-scroll gap-1 scroll"
 >
   {
     iconList.map((ico) => {
@@ -47,7 +47,7 @@ const iconList = iconsList.default;
           title={iconName}
           class="flex items-center justify-center cursor-pointer aspect-square rounded"
         >
-          <i class={`ti ti-${ico} text-2xl`} />
+          <i class={`ti ti-${ico} text-3xl xl:text-6xl`} />
         </button>
       );
     })
