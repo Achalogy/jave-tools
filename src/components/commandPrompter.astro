@@ -1,0 +1,118 @@
+---
+const { list = [] } = Astro.props;
+// const list = [
+//   {
+//     title: "Plan de estudios",
+//     description: "Ingeniería de Sistemas",
+//   },
+// ];
+---
+
+<script
+  src="https://cdn.jsdelivr.net/npm/minisearch@7.0.1/dist/umd/index.min.js"
+></script>
+
+<script is:inline define:vars={{ list }}>
+  document.addEventListener("keydown", (e) => {
+    const prompter = document.getElementById("prompter");
+    const prompterInput = document.getElementById("prompter-input");
+    const listdiv = document.getElementById("div-list");
+    if (e.key == "k" && e.ctrlKey) {
+      e.preventDefault();
+      switch (prompter.style.getPropertyValue("display")) {
+        case "none":
+          prompter.style.setProperty("display", "flex");
+          prompterInput.focus();
+          break;
+        case "flex":
+          listdiv.innerHTML = `<p class="text-center text-slate-500">Escribe algo :D</p>`;
+          prompterInput.value = "";
+          prompter.style.setProperty("display", "none");
+          break;
+      }
+    }
+  });
+
+  document.addEventListener("astro:page-load", () => {
+    const prompterInput = document.getElementById("prompter-input");
+    const listdiv = document.getElementById("div-list");
+    const prompter = document.getElementById("prompter");
+
+    const openSearch = document.getElementById("open-search");
+
+    openSearch.addEventListener("click", () => {
+      prompter.style.setProperty("display", "flex");
+      prompterInput.focus();
+    });
+
+    let miniSearch = new MiniSearch({
+      fields: ["title", "href", "description"], // fields to index for full-text search
+      storeFields: ["title", "href", "description"], // fields to return with search results,
+      searchOptions: {
+        fuzzy: 2,
+        prefix: true,
+      },
+    });
+
+    miniSearch.addAll(list);
+
+    prompter.addEventListener("keydown", (e) => {
+      if (e.key == "Escape") {
+        listdiv.innerHTML = `<p class="text-center text-slate-500">Escribe algo :D</p>`;
+        prompterInput.value = "";
+        prompter.style.setProperty("display", "none");
+      }
+    });
+
+    prompterInput.addEventListener("input", (e) => {
+      // alert(e.target.value)
+      if (!e.target.value)
+        listdiv.innerHTML = `<p class="text-center text-slate-500">Escribe algo :D</p>`;
+      else {
+        listdiv.innerHTML = miniSearch
+          .search(e.target.value, { fuzzy: 1 })
+          .slice(0, 5)
+          .map(
+            (x) =>
+              `<button target='_blank' class='w-full flex flex-col justify-left text-left p-2' onclick='window.open("${x.href}")'> 
+  <b class='text-md'>${x.title}</b>
+  <p>${x.description}</p>
+</button>`
+          )
+          .join("\n");
+      }
+    });
+
+    prompterInput.addEventListener("keydown", (e) => {
+      if (e.key == "Enter") {
+        e.preventDefault();
+
+        listdiv.querySelector("button")?.click();
+      }
+    });
+  });
+</script>
+
+<!-- style="display:none"  -->
+<div
+  style="display: none;"
+  id="prompter"
+  class="fixed items-center justify-center top-0 left-0 w-full h-full bg-black bg-opacity-15 backdrop-blur-sm p-8"
+>
+  <div class="flex flex-col w-full xl:w-1/2 h-full xl:h-2/3">
+    <div class="flex flex-col bg-white p-2 rounded gap-2">
+      <input
+        type="text"
+        placeholder="Type something..."
+        class="text-2xl rounded-none border-b p-2"
+        id="prompter-input"
+      />
+      <div
+        class="flex flex-col items-center gap-2 flex-1"
+        id="div-list"
+      >
+        <p class="text-center text-slate-500 w-full">Escribe algo :D</p>
+      </div>
+    </div>
+  </div>
+</div>

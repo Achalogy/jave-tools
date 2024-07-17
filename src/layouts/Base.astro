@@ -3,12 +3,22 @@ import ViewTransitions from "astro/components/ViewTransitions.astro";
 import {
   IconBrandGithub,
   IconMap2,
+  IconSearch,
   IconSettings,
   IconUser,
 } from "@tabler/icons-react";
+import CommandPrompter from "../components/commandPrompter.astro";
 
 const { title, desc } = Astro.props;
 const themeCookie = Astro.cookies.get("theme")?.value ?? "light";
+
+let clases: {
+  name: string;
+  id: string;
+  url?: string;
+  icon?: string;
+  createdAt?: number;
+}[] = JSON.parse(Astro.cookies.get("clases")?.value ?? "[]");
 ---
 
 <html lang="es" about="acha">
@@ -36,14 +46,77 @@ const themeCookie = Astro.cookies.get("theme")?.value ?? "light";
   </head>
   <ViewTransitions />
   <body>
-    <main id="theme-container" class={themeCookie}>
+    <main id="theme-container" class={themeCookie + " relative"}>
+      <CommandPrompter
+        list={[
+          {
+            title: "Centro de alumnado",
+            description:
+              "Acceso a centro de alumnado, inscripción de materias, intranet, etc",
+            href: "https://cs.javeriana.edu.co:8443/psp/CS92PRO/EMPLOYEE/SA/c/SA_LEARNER_SERVICES.SSS_STUDENT_CENTER.GBL",
+            id: "centro-alumnado",
+          },
+          {
+            title: "Campus virtual",
+            href: "https://campusvirtuallms.javeriana.edu.co/d2l/home",
+            description: "Acceso a las clases, notas, etc.",
+            id: "campus-virtual",
+          },
+          {
+            title: "Configuración",
+            href: "/settings",
+            description:
+              "Configuración de la aplicación, cambio de tema, agregar clases, etc",
+            id: "settings",
+          },
+          {
+            title: "Plan de estudios",
+            href: "https://drive.google.com/file/d/10GRkHgHyxEKHVsxJtIAUjQ7nD2Srgojd/view?usp=sharing",
+            description: "Ingeniería de sistemas",
+            id: "plan-estudios",
+          },
+          {
+            title: "Calendario 2024",
+            href: "/settings",
+            description: "Fechas importantes, festivos, número de semanas.",
+            id: "calendar",
+          },
+          {
+            title: "Salas Biblioteca",
+            href: "https://biblioreservas.javeriana.edu.co/r/search/espacios_biblioteca_puj#s-lc-public-pt",
+            description:
+              "Reservar sala biblioteca, ver reservas generadas, etc.",
+            id: "salas-bibliotecas",
+          },
+          {
+            title: "Mapa campus",
+            href: "https://www.javeriana.edu.co/nuestras-instalaciones",
+            description: "Ubicación de los edificios",
+            id: "mapa-campus",
+          },
+          ...clases.map((x) => ({
+            title: x.name,
+            description: x.id,
+            href: "https://campusvirtuallms.javeriana.edu.co/d2l/home/" + x.id,
+            id: x.id,
+          })),
+        ]}
+      />
       <div
         class={`flex flex-col min-h-screen bg-white dark:bg-gray-900 dark:text-white`}
       >
         <div
           class="select-none p-4 flex justify-between items-center px-[5%] bg-indigo-400 dark:from-gray-800 dark:to-gray-800 text-white"
         >
-          <a class="font-semibold" href="/">JaveTools</a>
+          <a class="font-semibold hidden xl:flex" href="/">JaveTools</a>
+          <div
+            id="open-search"
+            class="xl:w-full aspect-square xl:aspect-auto flex items-center gap-2 xl:max-w-[30rem] text-xs text-opacity-60 cursor-pointer p-1 px-2 bg-gray-200 bg-opacity-20 rounded-full"
+          >
+            <IconSearch size={15} className="hidden xl:flex" />
+            <IconSearch size={25} className="flex xl:hidden" />
+            <p class="hidden xl:flex">Buscar | ctrl + k</p>
+          </div>
           <div class="flex gap-4">
             <a
               title="Centro de alumnado"
@@ -85,7 +158,11 @@ const themeCookie = Astro.cookies.get("theme")?.value ?? "light";
             >
           </p>
           <p class="flex gap-2 text-white">
-            Código de esta página disponible en <a class="flex gap-1 underline" href="https://github.com/Achalogy/jave-tools" target="_blank">
+            Código de esta página disponible en <a
+              class="flex gap-1 underline"
+              href="https://github.com/Achalogy/jave-tools"
+              target="_blank"
+            >
               <IconBrandGithub /> Github</a
             >
           </p>
