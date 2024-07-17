@@ -1,0 +1,30 @@
+---
+import {
+  IconMoon,
+  IconSun,
+} from "@tabler/icons-react";
+const themeCookie = Astro.cookies.get("theme")?.value ?? "light";
+---
+
+<script is:inline>
+  function changeTheme() {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; theme=`);
+    const theme = parts.pop().split(";").shift();
+    const nTheme = theme == "dark" ? "light" : "dark";
+    document.cookie = `theme=${nTheme}; expires=${new Date(Date.now() + 10e9).toUTCString()}; path=/`;
+    window.location.reload();
+  }
+</script>
+
+<div
+  onclick="changeTheme()"
+  class="border dark:border-slate-700 dark:bg-gray-800 rounded p-4 flex gap-2 cursor-pointer select-none"
+>
+  <p>
+    {themeCookie == "dark" ? <IconSun /> : <IconMoon />}
+  </p>
+  <p class="font-semibold">
+    {themeCookie == "dark" ? "Cambiar a tema Claro" : "Cambiar a tema Oscuro"}
+  </p>
+</div>

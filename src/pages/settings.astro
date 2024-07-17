@@ -2,17 +2,15 @@
 import {
   IconCirclePlus,
   IconDownload,
-  IconMoon,
   icons,
-  IconSun,
   IconTrash,
   IconUpload,
 } from "@tabler/icons-react";
 import Base from "../layouts/Base.astro";
 import SimpleCard from "../components/simpleCard.astro";
 import IconListSelector from "../components/iconListSelector.astro";
+import ChangeTheme from "../components/changeTheme.astro";
 
-const themeCookie = Astro.cookies.get("theme")?.value ?? "light";
 
 let clases: {
   name: string;
@@ -65,15 +63,6 @@ if (Astro.request.method == "POST") {
 ---
 
 <script is:inline>
-  function changeTheme() {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; theme=`);
-    const theme = parts.pop().split(";").shift();
-    const nTheme = theme == "dark" ? "light" : "dark";
-    document.cookie = `theme=${nTheme}; expires=${new Date(Date.now() + 10e9).toUTCString()}; path=/`;
-    window.location.reload();
-  }
-
   function showForm() {
     const e = document.getElementById("form-addClass");
     e.style.setProperty("display", "flex");
@@ -147,21 +136,7 @@ if (Astro.request.method == "POST") {
   >
     <div class="flex flex-col flex-1 gap-2 xl:gap-4">
       <b>Configuración de la aplicación</b>
-      <div
-        onclick="changeTheme()"
-        class="border dark:border-slate-700 dark:bg-gray-800 rounded p-4 flex gap-2 cursor-pointer select-none"
-      >
-        <p>
-          {themeCookie == "dark" ? <IconSun /> : <IconMoon />}
-        </p>
-        <p class="font-semibold">
-          {
-            themeCookie == "dark"
-              ? "Cambiar a tema Claro"
-              : "Cambiar a tema Oscuro"
-          }
-        </p>
-      </div>
+      <ChangeTheme />
     </div>
     <div class="flex flex-col gap-2 xl:gap-4 flex-[2]">
       <b>Personalizar App</b>
