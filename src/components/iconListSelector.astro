@@ -17,6 +17,11 @@ const iconList = iconsList.default;
     const oldIcon = document.querySelector(`button[title=${oldvalue}]`);
     const newIcon = document.querySelector(`button[title=${e.getAttribute("title")}]`);
 
+    const themeContainer = document.getElementById('theme-container')
+
+    if(themeContainer.className.includes('dark')) {
+      newIcon.style.setProperty("background-color", "#ffffff20");
+    }else 
     newIcon.style.setProperty("background-color", "#00000010");
 
     if (oldIcon) {

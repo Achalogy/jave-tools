@@ -15,6 +15,7 @@ let clases: {
   id: string;
   url?: string;
   icon?: string;
+  createdAt?: number;
 }[] = JSON.parse(Astro.cookies.get("clases")?.value ?? "[]");
 ---
 

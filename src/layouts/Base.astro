@@ -36,7 +36,7 @@ const themeCookie = Astro.cookies.get("theme")?.value ?? "light";
   </head>
   <ViewTransitions />
   <body>
-    <main class={themeCookie}>
+    <main id="theme-container" class={themeCookie}>
       <div
         class={`flex flex-col min-h-screen bg-white dark:bg-gray-900 dark:text-white`}
       >

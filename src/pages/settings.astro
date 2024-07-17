@@ -19,6 +19,7 @@ let clases: {
   id: string;
   url?: string;
   icon?: string;
+  createdAt?: number;
 }[] = JSON.parse(Astro.cookies.get("clases")?.value ?? "[]");
 
 if (Astro.request.method == "POST") {
@@ -31,13 +32,15 @@ if (Astro.request.method == "POST") {
       const name = (formData?.get("name") ?? "").toString();
       const id = (formData?.get("id") ?? "").toString();
       const icon = (formData?.get("selected-icon") ?? "").toString();
+      const createdAt = new Date(Date.now()).getTime();
 
-      if (!name || !id || !icon) return;
+      if (!name || !id || !icon || !createdAt) return;
 
       clases.push({
         name,
         id,
         icon,
+        createdAt,
       });
       break;
     }
@@ -45,9 +48,11 @@ if (Astro.request.method == "POST") {
     case "removeClass": {
       const id = (formData?.get("id") ?? "").toString();
 
+      console.log(id);
+
       if (!id) return;
 
-      clases = clases.filter((c) => c.id != id);
+      clases = clases.filter((c) => c.id + (c.createdAt ?? 0).toString() != id);
 
       break;
     }
@@ -191,7 +196,11 @@ if (Astro.request.method == "POST") {
                     <button type="submit" class="cursor-pointer flex-1">
                       <IconTrash color="red" />
                     </button>
-                    <input type="hidden" name="id" value={c.id} />
+                    <input
+                      type="hidden"
+                      name="id"
+                      value={`${c.id}${c.createdAt ?? 0}`}
+                    />
                   </form>
                 );
               })
@@ -221,7 +230,10 @@ if (Astro.request.method == "POST") {
                 />
               </label>
               <p>Icono</p>
-              <div class="p-2 rounded bg-gray-100 dark:bg-gray-900 mr-auto w-full max-w-[25rem]" id="scrollbar">
+              <div
+                class="p-2 rounded bg-gray-100 dark:bg-gray-900 mr-auto w-full max-w-[25rem]"
+                id="scrollbar"
+              >
                 <IconListSelector slot="content" />
               </div>
               <div class="justify-end flex gap-2 mt-3">
