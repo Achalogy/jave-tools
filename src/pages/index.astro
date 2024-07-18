@@ -1,13 +1,16 @@
 ---
 import {
   IconAbacus,
+  IconBrandTeams,
   IconCalendar,
   IconDeviceFloppy,
   IconFiles,
   IconListCheck,
+  IconMail,
   IconMap2,
   IconReservedLine,
   icons,
+  IconUser,
 } from "@tabler/icons-react";
 import ClickableCard from "../components/clickableCard.astro";
 import Base from "../layouts/Base.astro";
@@ -24,6 +27,37 @@ let clases: {
 <Base>
   <div class="w-full xl:w-2/3 mx-auto p-4">
     <div class="flex flex-col gap-3 p-4">
+      <b>Plataformas</b>
+      <div class="grid grid-cols-1 xl:grid-cols-3 gap-3">
+        <ClickableCard
+          title="Centro de alumnado"
+          description="Centro de alumnado"
+          href="https://cs.javeriana.edu.co:8443/psp/CS92PRO/EMPLOYEE/SA/c/SA_LEARNER_SERVICES.SSS_STUDENT_CENTER.GBL"
+        >
+          <IconUser slot="Icon" color={"#0d9488"} />
+        </ClickableCard>
+        <ClickableCard
+          title="Correo | Outlook"
+          description="Correos electronicos"
+          href="https://outlook.office365.com/mail/"
+        >
+          <IconMail slot="Icon" color={"#0d9488"} />
+        </ClickableCard>
+        <ClickableCard
+          title="Campus virtual"
+          description="Campus virtual"
+          href="https://campusvirtuallms.javeriana.edu.co/d2l/home"
+        >
+          <IconMap2 slot="Icon" color={"#0d9488"} />
+        </ClickableCard>
+        <ClickableCard
+          title="Microsoft Teams"
+          description="Grupos, clases de microsoft teams."
+          href="https://teams.microsoft.com/v2"
+        >
+          <IconBrandTeams slot="Icon" color={"#0d9488"} />
+        </ClickableCard>
+      </div>
       <b>Clases Campus</b>
       <div class="grid grid-cols-1 xl:grid-cols-3 gap-3">
         {
