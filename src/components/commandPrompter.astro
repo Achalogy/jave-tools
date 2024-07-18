@@ -69,17 +69,23 @@ const { list = [] } = Astro.props;
       if (!e.target.value)
         listdiv.innerHTML = `<p class="text-center text-slate-500">Escribe algo :D</p>`;
       else {
-        listdiv.innerHTML = miniSearch
+        const data = miniSearch
           .search(e.target.value, { fuzzy: 1 })
-          .slice(0, 5)
-          .map(
-            (x) =>
-              `<button target='_blank' class='w-full flex flex-col justify-left text-left p-2 dark:bg-gray-800 dark:text-white' onclick='window.open("${x.href}")'> 
-  <b class='text-md'>${x.title}</b>
-  <p>${x.description}</p>
-</button>`
-          )
-          .join("\n");
+          .slice(0, 5);
+
+        if (data.length > 0) {
+          listdiv.innerHTML = data
+            .map(
+              (x) =>
+                `<button target='_blank' class='w-full flex flex-col justify-left text-left p-2 dark:bg-gray-800 dark:text-white' onclick='window.open("${x.href}")'> 
+    <b class='text-md'>${x.title}</b>
+    <p>${x.description}</p>
+  </button>`
+            )
+            .join("\n");
+        } else {
+          listdiv.innerHTML = `<p class="text-center text-slate-500">No encontramos nada :(</p>`;
+        }
       }
     });
 
@@ -105,7 +111,7 @@ const { list = [] } = Astro.props;
   }
 
   function preventDefaultClick(e) {
-    e.stopPropagation()
+    e.stopPropagation();
   }
 </script>
 
