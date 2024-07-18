@@ -2,6 +2,7 @@
 import ViewTransitions from "astro/components/ViewTransitions.astro";
 import {
   IconBrandGithub,
+  IconHome,
   IconMap2,
   IconSearch,
   IconSettings,
@@ -120,18 +121,22 @@ let clases: {
         class={`flex flex-col min-h-screen bg-white dark:bg-gray-900 dark:text-white`}
       >
         <div
-          class="select-none p-4 flex justify-between items-center px-[5%] bg-indigo-400 dark:from-gray-800 dark:to-gray-800 text-white"
+          class="select-none p-4 flex justify-between w-full items-center px-[5%] bg-indigo-400 dark:from-gray-800 dark:to-gray-800 text-white"
         >
           <a class="font-semibold hidden xl:flex" href="/">JaveTools</a>
-          <div
-            id="open-search"
-            class="xl:w-full aspect-square xl:aspect-auto flex items-center gap-2 xl:max-w-[30rem] text-xs text-opacity-60 cursor-pointer p-1 px-2 bg-gray-200 bg-opacity-20 rounded-full"
-          >
-            <IconSearch size={15} className="hidden xl:flex" />
-            <IconSearch size={25} className="flex xl:hidden" />
-            <p class="hidden xl:flex">Buscar | ctrl + k</p>
-          </div>
-          <div class="flex gap-4">
+          <a class="flex xl:hidden h-full items-center justify-center" href="/">
+            <IconHome size={30} />
+          </a>
+
+          <div class="flex gap-4 xl:w-full max-w-[30rem] items-center">
+            <div
+              id="open-search"
+              class="xl:w-full flex items-center gap-2 xl:max-w-[30rem] text-xs xl:text-base text-opacity-60 cursor-pointer p-1 px-3 bg-gray-200 bg-opacity-20 rounded-full"
+            >
+              <IconSearch size={15} className="hidden xl:flex" />
+              <IconSearch size={25} className="flex xl:hidden" />
+              <p class="">Buscar | ctrl + k</p>
+            </div>
             <a
               title="Centro de alumnado"
               href="https://cs.javeriana.edu.co:8443/psp/CS92PRO/EMPLOYEE/SA/c/SA_LEARNER_SERVICES.SSS_STUDENT_CENTER.GBL"
