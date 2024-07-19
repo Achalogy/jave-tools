@@ -25,10 +25,10 @@ let clases: {
 ---
 
 <Base>
-  <div class="w-full xl:w-2/3 mx-auto p-4">
-    <div class="flex flex-col gap-3 p-4">
+  <div class="flex flex-col xl:flex-row w-full xl:w-[90%] mx-auto p-4">
+    <div class="flex flex-col gap-3 p-4 flex-1 order-2 xl:order-1">
       <b>Plataformas</b>
-      <div class="grid grid-cols-1 xl:grid-cols-3 gap-3">
+      <div class="grid grid-cols-1 xl:grid-cols-2 gap-3">
         <ClickableCard
           title="Centro de alumnado"
           description="Centro de alumnado"
@@ -58,28 +58,6 @@ let clases: {
           <IconBrandTeams slot="Icon" color={"#0d9488"} />
         </ClickableCard>
       </div>
-      <b>Clases Campus</b>
-      <div class="grid grid-cols-1 xl:grid-cols-3 gap-3">
-        {
-          clases.map((c) => {
-            const Icon = icons[c.icon] ?? IconAbacus;
-
-            return (
-              <ClickableCard
-                title={c.name}
-                description={c.id}
-                href={
-                  "https://campusvirtuallms.javeriana.edu.co/d2l/home/" + c.id
-                }
-              >
-                <Icon slot="Icon" />
-              </ClickableCard>
-            );
-          })
-        }
-      </div>
-    </div>
-    <div class="flex flex-col gap-3 p-4">
       <b>Enlaces importantes</b>
       <ClickableCard
         title="Plan de estudios"
@@ -123,6 +101,28 @@ let clases: {
       >
         <IconFiles slot="Icon" color={"#0d9488"} />
       </ClickableCard>
+    </div>
+    <div class="flex flex-col gap-3 p-4 flex-[2] order-1 xl:order-2">
+      <b>Clases Campus</b>
+      <div class="grid grid-cols-1 xl:grid-cols-2 gap-3">
+        {
+          clases.map((c) => {
+            const Icon = icons[c.icon] ?? IconAbacus;
+
+            return (
+              <ClickableCard
+                title={c.name}
+                description={c.id}
+                href={
+                  "https://campusvirtuallms.javeriana.edu.co/d2l/home/" + c.id
+                }
+              >
+                <Icon slot="Icon" />
+              </ClickableCard>
+            );
+          })
+        }
+      </div>
     </div>
   </div>
 </Base>
