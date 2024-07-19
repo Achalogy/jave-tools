@@ -72,17 +72,19 @@ const { list = [] } = Astro.props;
         list.forEach((x, i) => {
           if (x == document.activeElement) {
             focused = i;
-          } else {
-            listdiv.querySelector("button")?.click();
           }
         });
 
-        if (focused == list.length - 1) focused = -1;
+        if (focused == -1) {
+          listdiv.querySelector("button")?.focus();
+        } else {
+          if (focused == list.length - 1) focused = -1;
 
-        list
-          .slice(0, focused + 2)
-          .at(-1)
-          .focus();
+          list
+            .slice(0, focused + 2)
+            .at(-1)
+            .focus();
+        }
       }
       if (e.key == "ArrowUp") {
         e.preventDefault();
@@ -92,15 +94,16 @@ const { list = [] } = Astro.props;
         list.forEach((x, i) => {
           if (x == document.activeElement) {
             focused = i;
-          } else {
-            listdiv.querySelector("button")?.focus();
           }
         });
 
-        list
-          .slice(focused - 1 ?? 0)
-          .at(0)
-          .focus();
+        if (focused == -1) {
+          listdiv.querySelector("button")?.focus();
+        } else
+          list
+            .slice(focused - 1 ?? 0)
+            .at(0)
+            .focus();
       }
     });
 
@@ -169,8 +172,8 @@ const { list = [] } = Astro.props;
     >
       <div class="hidden xl:flex flex-col items-center gap-1 flex-1 text-xs">
         <p class="text-center text-slate-500 w-full">
-          <span class="p-1 rounded bg-slate-100">Enter</span> para entrar al
-          primer resultado
+          <span class="p-1 rounded bg-slate-100">Enter</span> para entrar al primer
+          resultado
         </p>
         <p class="text-center text-slate-500 w-full flex justify-center gap-1">
           Usa las flechas <span class="flex p-1 rounded bg-slate-100"
