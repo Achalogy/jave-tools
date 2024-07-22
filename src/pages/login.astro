@@ -1,0 +1,40 @@
+---
+import { IconBrandGoogle } from "@tabler/icons-react";
+import Base from "../layouts/Base.astro";
+---
+
+<Base>
+  <div class="flex flex-col items-center justify-center gap-2 p-8 flex-1">
+    
+    <div
+      class="flex flex-col xl:flex-row gap-3 xl:gap-8 w-2/3 bg-gray-100 dark:bg-gray-800 p-4 rounded min-h-[20rem]"
+    >
+      <div class="flex-[2] flex items-center justify-center border-r">
+        <b class="xl:text-xl text-center">Iniciar Sesión</b>
+      </div>
+      <div class="flex flex-col flex-[3] gap-4 items-center justify-center">
+        <div class="flex flex-col gap-2 w-full max-w-[20rem] mx-auto">
+          <label class="flex flex-col">
+            <b>Email</b>
+            <input type="email" name="" id="" />
+          </label>
+          <label class="flex flex-col">
+            <b>Contraseña</b>
+            <input type="password" name="" id="" />
+          </label>
+        </div>
+        <div class="flex gap-2 justify-center w-full">
+          <button
+            class="w-full bg-indigo-400 max-w-[15rem] rounded p-2 font-semibold text-white"
+            >Iniciar Sesión</button
+          >
+          <button
+            class="bg-indigo-400 aspect-square rounded p-2 font-semibold text-white"
+          >
+            <IconBrandGoogle />
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</Base>
